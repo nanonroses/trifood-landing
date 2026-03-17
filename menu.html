@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú TRIFOOD - Café & Bistro</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            beige: '#FAF3E0',
+                            forest: '#1B3B2B',
+                            cream: '#FFFCF7',
+                            gold: '#C5A059',
+                            goldLight: '#E6D2A8'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Lato', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #E5E7EB; /* Gray background for screen */
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            font-family: 'Lato', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* A4 Paper Styling */
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            background-color: #FAF3E0; /* Warm beige */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            padding: 12mm 15mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Dotted leader for prices */
+        .dotted-line {
+            flex-grow: 1;
+            border-bottom: 2px dotted #C5A059;
+            opacity: 0.5;
+            margin: 0 10px;
+            position: relative;
+            top: -6px;
+        }
+
+        /* Print optimizations */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            .a4-page {
+                box-shadow: none;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 10mm;
+            }
+            .no-print {
+                display: none;
+            }
+            @page {
+                size: auto;
+                margin: 0mm;
+            }
+        }
+
+        /* Decorative Background Pattern */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: repeating-linear-gradient(
+                45deg,
+                #1B3B2B,
+                #1B3B2B 10px,
+                #C5A059 10px,
+                #C5A059 20px
+            );
+        }
+    </style>
+</head>
+<body class="text-brand-forest">
+
+    <!-- Print Button (Hidden on Print) -->
+    <button onclick="window.print()" class="no-print fixed top-5 right-5 bg-brand-forest text-brand-beige px-6 py-2 rounded-full font-bold shadow-lg hover:bg-opacity-90 transition-all flex items-center gap-2">
+        <i data-lucide="printer" class="w-5 h-5"></i> Imprimir Menú
+    </button>
+
+    <!-- Main Menu Container -->
+    <div class="a4-page">
+        <div class="bg-pattern"></div>
+
+        <!-- HEADER -->
+        <header class="text-center mb-8 mt-4">
+            <div class="flex justify-center mb-2">
+                <i data-lucide="leaf" class="text-brand-gold w-8 h-8"></i>
+            </div>
+            <h1 class="font-serif text-5xl font-bold tracking-widest text-brand-forest mb-1">TRIFOOD</h1>
+            <p class="font-sans text-sm tracking-[0.2em] text-brand-gold uppercase font-semibold">Café & Bistro · Santiago Centro</p>
+            <div class="w-24 h-0.5 bg-brand-gold mx-auto mt-4 opacity-70"></div>
+        </header>
+
+        <!-- MAIN CONTENT (2 Columns) -->
+        <div class="grid grid-cols-2 gap-x-8 gap-y-6 flex-grow">
+
+            <!-- LEFT COLUMN -->
+            <div class="flex flex-col gap-6">
+                
+                <!-- SECTION 1: DESAYUNOS -->
+                <section class="bg-brand-cream rounded-xl p-5 border border-brand-goldLight shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-brand-beige rounded-bl-full -z-10"></div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <i data-lucide="sun" class="text-brand-gold w-6 h-6"></i>
+                        <h2 class="font-serif text-xl font-bold tracking-wide uppercase">Desayunos</h2>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between items-baseline w-full">
+                                <span class="font-bold text-[15px]">Express</span>
+                                <div class="dotted-line"></div>
+                                <span class="font-bold text-brand-forest">$3.000</span>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-0.5 italic">Espresso + Sándwich</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-baseline w-full">
+                                <span class="font-bold text-[15px]">Aliado Medium</span>
+                                <div class="dotted-line"></div>
+                                <span class="font-bold text-brand-forest">$4.000</span>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-0.5 italic">Café Mediano + Muffins</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-baseline w-full">
+                                <span class="font-bold text-[15px]">High</span>
+                                <div class="dotted-line"></div>
+                                <span class="font-bold text-brand-forest">$6.500</span>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-0.5 italic">Café Grande + Sándwich del Día + Jugo Natural</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-baseline w-full">
+                                <span class="font-bold text-[15px] text-brand-gold">TRIFOOD</span>
+                                <div class="dotted-line"></div>
+                                <span class="font-bold text-brand-forest">$9.990</span>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-0.5 italic leading-snug">Café Grande + Pastel del día + Sándwich del día + Jugo Natural + Fruta</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 3: ALMUERZOS -->
+                <section class="bg-brand-forest text-brand-cream rounded-xl p-5 shadow-md border border-brand-forest relative overflow-hidden">
+                    <div class="absolute -bottom-4 -right-4 opacity-10">
+                        <i data-lucide="utensils" class="w-32 h-32"></i>
+                    </div>
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="utensils-crossed" class="text-brand-gold w-6 h-6"></i>
+                            <h2 class="font-serif text-xl font-bold tracking-wide uppercase text-brand-beige">Almuerzos</h2>
+                        </div>
+                        <span class="font-bold text-xl text-brand-gold">$6.000</span>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-3 opacity-90">
+                        Incluye: <strong class="text-brand-goldLight">Plato de Fondo + Postre + Jugo.</strong>
+                    </p>
+                    <div class="inline-block border border-brand-gold/50 rounded-full px-3 py-1 text-[11px] text-brand-goldLight tracking-wider uppercase">
+                        Opciones Veganas y Sin Gluten disponibles
+                    </div>
+                </section>
+
+                <!-- SECTION 4: HELADOS -->
+                <section class="bg-brand-cream rounded-xl p-5 border border-brand-goldLight shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i data-lucide="ice-cream-2" class="text-brand-gold w-6 h-6"></i>
+                        <h2 class="font-serif text-xl font-bold tracking-wide uppercase">Helados</h2>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between items-baseline w-full">
+                                <span class="font-bold text-[15px]">Frappuccino</span>
+                                <div class="dotted-line"></div>
+                                <span class="font-bold text-brand-forest">$4.490</span>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-0.5 italic leading-snug">Caramelo o Vainilla, Café, Hielo, Crema Chantilly</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-baseline w-full">
+                                <span class="font-bold text-[15px]">Copa de Helados</span>
+                                <div class="dotted-line"></div>
+                                <span class="font-bold text-brand-forest">$4.990</span>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-0.5 italic leading-snug">3 Bolas a elección, Salsa, Crema Chantilly</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-baseline w-full">
+                                <span class="font-bold text-[15px]">Café con Helado</span>
+                                <div class="dotted-line"></div>
+                                <span class="font-bold text-brand-forest">$5.990</span>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-0.5 italic leading-snug">2 Bolas, Leche sin Lactosa, Shot Café, Salsa de Chocolate</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="flex flex-col gap-6">
+
+                <!-- SECTION 2: CAFETERÍA -->
+                <section class="bg-brand-cream rounded-xl p-5 border-t-4 border-brand-gold shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i data-lucide="coffee" class="text-brand-gold w-6 h-6"></i>
+                        <h2 class="font-serif text-xl font-bold tracking-wide uppercase">Cafetería</h2>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="flex justify-center gap-4 mb-3 pb-2 border-b border-brand-beige">
+                            <span class="text-sm font-bold bg-brand-beige px-3 py-1 rounded-full text-brand-forest">Mediano <span class="text-brand-gold">$2.690</span></span>
+                            <span class="text-sm font-bold bg-brand-beige px-3 py-1 rounded-full text-brand-forest">Grande <span class="text-brand-gold">$3.190</span></span>
+                        </div>
+                        <p class="text-[13px] leading-relaxed text-gray-700">
+                            <strong>Americano</strong> • <strong>Latte</strong> • <strong>Cortado</strong> • <strong>Chai Latte</strong><br>
+                            <strong>Moccacino</strong> <span class="italic text-xs text-gray-500">(Tradicional / Vainilla / Canela)</span><br>
+                            <strong>Cappuccino</strong> <span class="italic text-xs text-gray-500">(Tradicional / Vainilla / Canela)</span>
+                        </p>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-brand-beige">
+                        <div class="flex justify-between items-baseline w-full mb-1">
+                            <span class="font-bold text-[15px]">Té Variedad</span>
+                            <div class="dotted-line"></div>
+                            <span class="font-bold text-brand-forest">$1.800</span>
+                        </div>
+                        <p class="text-xs text-gray-600 italic">Tradicional, Chai, Verde, Especies</p>
+                    </div>
+                </section>
+
+                <!-- SECTION 5: PASTELERÍA -->
+                <section class="bg-brand-cream rounded-xl p-5 border border-brand-goldLight shadow-sm">
+                    <div class="flex items-center gap-2 mb-3">
+                        <i data-lucide="croissant" class="text-brand-gold w-6 h-6"></i>
+                        <h2 class="font-serif text-xl font-bold tracking-wide uppercase">Pastelería</h2>
+                    </div>
+                    <p class="text-[13px] leading-relaxed text-gray-700 text-justify">
+                        Empolvados, Rollitos de Canela, Alfajores, Galletones, Barquillos Rellenos Manjar o Chocolate, Bombones Prieto, Tortas de Hojarasca, Mendocinos, Chilenitos, Muffins.
+                    </p>
+                </section>
+
+                <!-- SECTION 6: POSTRES -->
+                <section class="bg-brand-cream rounded-xl p-5 border border-brand-goldLight shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i data-lucide="cake-slice" class="text-brand-gold w-6 h-6"></i>
+                        <h2 class="font-serif text-xl font-bold tracking-wide uppercase">Postres</h2>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-baseline w-full">
+                            <span class="font-bold text-[14px]">Pie de Limón</span>
+                            <div class="dotted-line"></div>
+                            <span class="font-bold text-brand-forest">$2.500</span>
+                        </div>
+                        <div class="flex justify-between items-baseline w-full">
+                            <span class="font-bold text-[14px]">Kutchen de Manzana</span>
+                            <div class="dotted-line"></div>
+                            <span class="font-bold text-brand-forest">$2.500</span>
+                        </div>
+                        <div class="flex justify-between items-baseline w-full">
+                            <span class="font-bold text-[14px]">Kutchen de Nuez</span>
+                            <div class="dotted-line"></div>
+                            <span class="font-bold text-brand-forest">$2.500</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 7: TORTAS A PEDIDO -->
+                <section class="bg-brand-cream rounded-xl p-5 border border-brand-goldLight shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i data-lucide="cake" class="text-brand-gold w-6 h-6"></i>
+                        <h2 class="font-serif text-xl font-bold tracking-wide uppercase">Tortas a Pedido</h2>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between items-baseline w-full">
+                                <span class="font-bold text-[14px]">Manjar Hojarasca</span>
+                                <div class="dotted-line"></div>
+                                <span class="font-bold text-brand-forest">$29.000</span>
+                            </div>
+                            <p class="text-xs text-gray-500 italic">15-20 personas</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-baseline w-full">
+                                <span class="font-bold text-[14px]">Panqueque Naranja</span>
+                                <div class="dotted-line"></div>
+                                <span class="font-bold text-brand-forest">$32.000</span>
+                            </div>
+                            <p class="text-xs text-gray-500 italic">15-20 personas</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-baseline w-full">
+                                <span class="font-bold text-[14px]">Barquillos Rellenos</span>
+                                <div class="dotted-line"></div>
+                                <span class="font-bold text-brand-forest">$38.000</span>
+                            </div>
+                            <p class="text-xs text-gray-500 italic">36 unidades</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="mt-8 text-center pt-6 border-t border-brand-gold/30">
+            <div class="flex justify-center items-center gap-6 text-sm font-semibold text-brand-forest tracking-wide">
+                <span class="flex items-center gap-1"><i data-lucide="party-popper" class="w-4 h-4 text-brand-gold"></i> Cotiza Eventos</span>
+                <span class="text-brand-gold">•</span>
+                <span class="flex items-center gap-1"><i data-lucide="instagram" class="w-4 h-4 text-brand-gold"></i> comercialtrifood</span>
+                <span class="text-brand-gold">•</span>
+                <span class="flex items-center gap-1"><i data-lucide="phone" class="w-4 h-4 text-brand-gold"></i> +56 9 9505 2096</span>
+            </div>
+        </footer>
+        
+    </div>
+
+    <!-- Initialize Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
