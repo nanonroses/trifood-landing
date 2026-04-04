@@ -777,26 +777,38 @@ header.scrolled .logo-img {
 
 /* FOOTER */
 .footer {
-    background: var(--primary);
+    background: #000000;
     color: var(--white);
     padding: 80px 0 0;
 }
 
 .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 50px;
     margin-bottom: 60px;
+    align-items: start;
+}
+
+.footer-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .footer-logo img {
-    height: 50px;
-    margin-bottom: 20px;
+    height: 160px;
+    margin-bottom: 25px;
+    filter: drop-shadow(0 4px 20px rgba(255,255,255,0.08));
 }
 
 .footer-logo p {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.6);
     margin-bottom: 20px;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    font-style: italic;
 }
 
 .footer h4 {
