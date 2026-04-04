@@ -612,6 +612,17 @@ nav {
     margin-top: 4rem;
 }
 
+.contact-container.contact-centered {
+    display: flex;
+    justify-content: center;
+    grid-template-columns: none;
+}
+
+.contact-container.contact-centered .contact-info {
+    max-width: 600px;
+    width: 100%;
+}
+
 .contact-info {
     padding: 40px;
     background: var(--white);
