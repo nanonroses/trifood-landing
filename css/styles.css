@@ -606,7 +606,7 @@ header.scrolled .logo-img {
     display: flex;
     gap: 20px;
     width: max-content;
-    animation: scrollCarousel 30s linear infinite;
+    animation: scrollCarousel 60s linear infinite;
 }
 
 /* Pause animation on hover */
@@ -632,7 +632,7 @@ header.scrolled .logo-img {
 
 @keyframes scrollCarousel {
     0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-340px * 5)); }
+    100% { transform: translateX(calc(-340px * 10)); }
 }
 
 .event-card:hover {
