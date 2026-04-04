@@ -632,7 +632,7 @@ header.scrolled .logo-img {
 
 @keyframes scrollCarousel {
     0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-340px * 10)); }
+    100% { transform: translateX(calc(-340px * 9)); }
 }
 
 .event-card:hover {
