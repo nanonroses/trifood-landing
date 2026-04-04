@@ -128,6 +128,11 @@ ul {
     background-color: var(--light);
 }
 
+#nosotros.section {
+    background-image: radial-gradient(circle at 2px 2px, var(--gray) 1px, transparent 0);
+    background-size: 30px 30px;
+}
+
 .section-dark {
     background-color: var(--primary);
     color: var(--white);
@@ -378,16 +383,21 @@ nav {
 
 .feature {
     text-align: center;
-    padding: 40px 30px;
+    padding: 50px 40px;
     background: var(--white);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
-    transition: var(--transition);
+    transition: var(--transition-slow);
+    border: 1px solid rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .feature:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-12px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary);
 }
 
 .feature-icon {
