@@ -28,6 +28,46 @@ const server = http.createServer((request, response) => {
         filePath = './index.html';
     }
 
+    if (request.method === 'POST' && request.url === '/api/save-client') {
+        let body = '';
+        request.on('data', chunk => {
+            body += chunk.toString();
+        });
+        request.on('end', () => {
+            try {
+                const clientData = JSON.parse(body);
+                clientData.fechaGuardado = new Date().toISOString();
+                
+                const clientesPath = path.join(__dirname, 'data', 'clientes.json');
+                let clientes = [];
+                
+                // Asegurarse de que la carpeta data exista
+                const dirPath = path.join(__dirname, 'data');
+                if (!fs.existsSync(dirPath)){
+                    fs.mkdirSync(dirPath);
+                }
+
+                if (fs.existsSync(clientesPath)) {
+                    const fileContent = fs.readFileSync(clientesPath, 'utf8');
+                    if (fileContent) {
+                        try { clientes = JSON.parse(fileContent); } catch(e) {}
+                    }
+                }
+                
+                clientes.push(clientData);
+                fs.writeFileSync(clientesPath, JSON.stringify(clientes, null, 2), 'utf8');
+                
+                response.writeHead(200, { 'Content-Type': 'application/json' });
+                response.end(JSON.stringify({ success: true, message: 'Cliente guardado correctamente' }));
+            } catch (error) {
+                response.writeHead(400, { 'Content-Type': 'application/json' });
+                response.end(JSON.stringify({ success: false, message: 'Bad request' }));
+            }
+        });
+        return; // Detener flujo para no servir archivos estáticos
+    }
+
+
     const extname = String(path.extname(filePath)).toLowerCase();
     const contentType = MIME_TYPES[extname] || 'application/octet-stream';
 
