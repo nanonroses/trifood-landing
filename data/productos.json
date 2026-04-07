@@ -1,0 +1,209 @@
+{
+  "moneda": "CLP",
+  "umbralMayoristaDefault": 10,
+  "categorias": [
+    {
+      "id": "syrups",
+      "nombre": "Syrups Torani",
+      "icono": "fas fa-wine-bottle",
+      "productos": [
+        {
+          "id": "torani-vanilla",
+          "nombre": "Syrup Torani Vanilla",
+          "descripcion": "El clásico sabor a vainilla francesa, cremoso y versátil para lattes y frappés.",
+          "imagen": "img/torani-vanilla.png",
+          "formato": "750ml",
+          "precioUnitario": 13990,
+          "precioMayorista": 11990,
+          "umbralMayorista": 10,
+          "badge": "TOP VENTAS",
+          "disponible": true
+        },
+        {
+          "id": "torani-caramel",
+          "nombre": "Syrup Torani Caramelo",
+          "descripcion": "Rico y mantecoso, perfecto para crear el Caramel Macchiato perfecto.",
+          "imagen": "img/torani-caramel.png",
+          "formato": "750ml",
+          "precioUnitario": 13990,
+          "precioMayorista": 11990,
+          "umbralMayorista": 10,
+          "badge": "PREMIUM",
+          "disponible": true
+        },
+        {
+          "id": "torani-peach",
+          "nombre": "Syrup Torani Peach",
+          "descripcion": "Sabor a durazno natural, ideal para tés helados, limonadas y smoothies refrescantes.",
+          "imagen": "img/Syrup Peach.avif",
+          "formato": "750ml",
+          "precioUnitario": 13990,
+          "precioMayorista": 11990,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        },
+        {
+          "id": "torani-hazelnut",
+          "nombre": "Syrup Torani Hazelnut",
+          "descripcion": "Sabor a avellana tostada ideal para bebidas frías y calientes.",
+          "imagen": "img/torani-hazelnut.png",
+          "formato": "750ml",
+          "precioUnitario": 13990,
+          "precioMayorista": 11990,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        },
+        {
+          "id": "torani-coconut",
+          "nombre": "Syrup Torani Coconut",
+          "descripcion": "Sabor tropical a coco, perfecto para mochas, frappés y bebidas de verano.",
+          "imagen": "img/SYRUP TORANI COCONUT 750ML.webp",
+          "formato": "750ml",
+          "precioUnitario": 13990,
+          "precioMayorista": 11990,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        },
+        {
+          "id": "torani-menta",
+          "nombre": "Syrup Torani Menta",
+          "descripcion": "Fresco y aromático, ideal para mochas de menta y bebidas especiales de temporada.",
+          "imagen": "img/Syrup Torani Menta.webp",
+          "formato": "750ml",
+          "precioUnitario": 13990,
+          "precioMayorista": 11990,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        }
+      ]
+    },
+    {
+      "id": "cafe",
+      "nombre": "Café de Especialidad",
+      "icono": "fas fa-coffee",
+      "productos": [
+        {
+          "id": "cafe-250g",
+          "nombre": "Café de Especialidad 250g",
+          "descripcion": "Mezcla exclusiva de granos arábicos con notas a chocolate y caramelo. Disponible en grano o molido.",
+          "imagen": "img/cafe-especialidad-new.jpg",
+          "formato": "250g · Grano o Molido",
+          "precioUnitario": 15990,
+          "precioMayorista": 15190,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        },
+        {
+          "id": "cafe-1kg",
+          "nombre": "Café de Especialidad 1 Kilo",
+          "descripcion": "Formato profesional para baristas. Granos arábicos seleccionados, disponible en grano o molido.",
+          "imagen": "img/cafe-especialidad-new.jpg",
+          "formato": "1 Kilo · Grano o Molido",
+          "precioUnitario": 39990,
+          "precioMayorista": 38990,
+          "umbralMayorista": 10,
+          "badge": "FORMATO PRO",
+          "disponible": true
+        }
+      ]
+    },
+    {
+      "id": "insumos",
+      "nombre": "Insumos Profesionales",
+      "icono": "fas fa-blender",
+      "productos": [
+        {
+          "id": "leche-polvo",
+          "nombre": "Leche en Polvo",
+          "descripcion": "Leche en polvo de alta calidad para preparaciones de café, chocolatería y pastelería profesional.",
+          "imagen": null,
+          "formato": "500g",
+          "precioUnitario": 11990,
+          "precioMayorista": 10990,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        },
+        {
+          "id": "vainilla-polvo",
+          "nombre": "Vainilla en Polvo",
+          "descripcion": "Vainilla premium en polvo para potenciar el sabor de tus preparaciones. Alta concentración.",
+          "imagen": null,
+          "formato": "1 Kilo",
+          "precioUnitario": 19990,
+          "precioMayorista": 18990,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        },
+        {
+          "id": "chocolate-polvo",
+          "nombre": "Chocolate en Polvo",
+          "descripcion": "Chocolate en polvo gourmet para preparar chocolates calientes, mochas y repostería de alta gama.",
+          "imagen": null,
+          "formato": "1 Kilo",
+          "precioUnitario": 15990,
+          "precioMayorista": 15190,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        },
+        {
+          "id": "chai-tea",
+          "nombre": "Chai Tea en Polvo",
+          "descripcion": "Mezcla aromática de especias y té para preparar el auténtico Chai Latte. Sabor intenso y equilibrado.",
+          "imagen": null,
+          "formato": "1 Kilo",
+          "precioUnitario": 19990,
+          "precioMayorista": 18990,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        }
+      ]
+    },
+    {
+      "id": "chocolates",
+      "nombre": "Chocolates Artesanales",
+      "icono": "fas fa-candy-cane",
+      "productos": [
+        {
+          "id": "prieto-bombones",
+          "nombre": "Bombones Rellenos y Pintados a mano",
+          "descripcion": "Exquisita caja de bombones artesanales. Ideal para regalos corporativos y experiencias gourmet.",
+          "imagen": "img/chocolates_artesanales.jpg",
+          "formato": "Caja 6 unidades",
+          "precioUnitario": 8500,
+          "precioMayorista": 7500,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        }
+      ]
+    },
+    {
+      "id": "equipamiento",
+      "nombre": "Equipamiento",
+      "icono": "fas fa-cogs",
+      "productos": [
+        {
+          "id": "maquina-marley",
+          "nombre": "Máquina Cápsulas Espresso Marley Rise Up",
+          "descripcion": "Máquina de cápsulas de espresso premium. Diseño compacto, presión profesional y facilidad de uso.",
+          "imagen": "img/Maquina de café espresso Rise Up I Marley Coffee.webp",
+          "formato": "Unidad",
+          "precioUnitario": 119990,
+          "precioMayorista": null,
+          "umbralMayorista": null,
+          "badge": "PRECIO ÚNICO",
+          "disponible": true
+        }
+      ]
+    }
+  ]
+}

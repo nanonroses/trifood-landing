@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Productos — TRIFOOD</title>
+    <meta name="description" content="Catálogo completo de productos TRIFOOD con precios unitarios y mayoristas. Café de especialidad, syrups Torani, chocolates artesanales y más.">
+    <link rel="canonical" href="https://trifood.cl/catalogo.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Catálogo de Productos — TRIFOOD">
+    <meta property="og:description" content="Catálogo B2B con precios unitarios y mayoristas. Café de especialidad, syrups Torani, insumos profesionales y más.">
+    <meta property="og:url" content="https://trifood.cl/catalogo.html">
+    <meta property="og:image" content="https://trifood.cl/img/og-image.webp">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/catalogo.css">
+</head>
+<body class="catalogo-page">
+
+    <!-- ===== HERO ===== -->
+    <section class="catalogo-hero">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Volver al sitio</a>
+        <div class="hero-logo-container">
+            <img src="img/logo.png" alt="TRIFOOD Logo" class="hero-logo">
+        </div>
+        <h1>Catálogo de Productos</h1>
+        <p class="hero-subtitle">Precios Unitarios y Mayoristas</p>
+        <div class="hero-line"></div>
+    </section>
+
+    <!-- ===== TOOLBAR ===== -->
+    <div class="catalogo-toolbar">
+        <div class="toolbar-inner">
+            <!-- Category Filters -->
+            <div class="category-filters" id="category-filters">
+                <!-- Rendered by JS -->
+            </div>
+
+            <!-- Search -->
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" class="search-input" placeholder="Buscar productos...">
+            </div>
+
+            <!-- View Toggle -->
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="grid" title="Vista grilla"><i class="fas fa-th-large"></i></button>
+                <button class="view-btn" data-view="table" title="Vista tabla"><i class="fas fa-list"></i></button>
+            </div>
+
+            <!-- Export Buttons -->
+            <div class="export-buttons">
+                <button class="export-btn pdf-btn" id="btn-export-pdf"><i class="fas fa-file-pdf"></i> PDF</button>
+                <button class="export-btn excel-btn" id="btn-export-excel"><i class="fas fa-file-excel"></i> Excel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="catalogo-content">
+        <p class="results-count" id="results-count">Cargando productos...</p>
+
+        <!-- Grid View -->
+        <div class="products-catalog-grid" id="catalog-grid">
+            <!-- Rendered by JS -->
+        </div>
+
+        <!-- Table View -->
+        <div class="products-catalog-table" id="catalog-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Formato</th>
+                        <th>P. Unitario</th>
+                        <th>P. Mayorista</th>
+                        <th>Ahorro</th>
+                        <th>Mínimo</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="catalog-table-body">
+                    <!-- Rendered by JS -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- ===== QUOTATION BAR ===== -->
+    <div class="quote-bar" id="quote-bar">
+        <div class="quote-bar-inner">
+            <div class="quote-summary">
+                <div class="quote-icon"><i class="fas fa-shopping-cart"></i></div>
+                <div class="quote-details">
+                    <h4>Tu Cotización</h4>
+                    <p id="quote-count">0 productos seleccionados</p>
+                </div>
+            </div>
+            <div class="quote-total" id="quote-total">
+                <span id="quote-total-value">$0</span>
+            </div>
+            <div class="quote-actions">
+                <button class="btn-send-whatsapp" id="btn-send-whatsapp">
+                    <i class="fab fa-whatsapp"></i> Enviar Cotización
+                </button>
+                <button class="btn-clear-quote" id="btn-clear-quote">
+                    <i class="fas fa-trash-alt"></i> Limpiar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== LIBRARIES ===== -->
+    <!-- SheetJS for Excel export -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- jsPDF AutoTable plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <!-- Catalog Logic -->
+    <script src="js/catalogo.js"></script>
+</body>
+</html>
