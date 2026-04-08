@@ -22,6 +22,28 @@ async function initApp() {
 
     // Cargar productos
     await fetchProductosExcel();
+    
+    // Configurar Folio
+    document.getElementById('pdf_folio').textContent = `Folio N° COT-${generarSecuencia()}`;
+}
+
+function establecerFechaEmision() {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const fStr = `${dd}-${mm}-${yyyy}`;
+    
+    const el = document.getElementById('pdf_fecha_emision');
+    if(el) el.textContent = fStr;
+}
+
+function generarSecuencia() {
+    const today = new Date();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yy = String(today.getFullYear()).slice(-2);
+    const rand = Math.floor(Math.random() * 900) + 100;
+    return `${yy}${mm}-${rand}`;
 }
 
 /** 

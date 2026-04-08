@@ -116,6 +116,8 @@ body {
 }
 
 .input-group input {
+    width: 100%;
+    min-width: 0;
     background-color: var(--bg-input);
     border: 1px solid var(--border-color);
     color: white;
