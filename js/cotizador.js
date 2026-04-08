@@ -135,6 +135,10 @@ function agregarFilaVacia() {
                 <label>Precio Unit ($)</label>
                 <input type="number" id="precio-${id}" value="0">
             </div>
+            <div class="input-group sm" style="max-width: 80px;">
+                <label>Desc %</label>
+                <input type="number" id="desc-${id}" value="0" min="0" max="100">
+            </div>
         </div>
         <div class="input-group">
             <label>Detalles / Observaciones</label>
@@ -148,7 +152,7 @@ function agregarFilaVacia() {
     poblarDatalist(document.getElementById(datalistId));
 
     // Listeners interactivos
-    const inputs = ['cant', 'prod', 'precio', 'detalle'].map(pfx => document.getElementById(`${pfx}-${id}`));
+    const inputs = ['cant', 'prod', 'precio', 'desc', 'detalle'].map(pfx => document.getElementById(`${pfx}-${id}`));
     
     // Detectar si selecciona algo de la lista de producto
     const prodInput = document.getElementById(`prod-${id}`);
@@ -196,7 +200,8 @@ const formatearDinero = (num) => {
  * MOTOR MATEMÁTICO & PDF RENDER
  */
 function calcularTodo() {
-    let subtotal = 0;
+    let subtotalBruto = 0;
+    let totalDescuento = 0;
     const tbody = document.getElementById('pdf-tbody');
     tbody.innerHTML = '';
 
@@ -204,28 +209,25 @@ function calcularTodo() {
         const cant = parseFloat(document.getElementById(`cant-${id}`).value) || 0;
         const nombre = document.getElementById(`prod-${id}`).value || '';
         const precio = parseFloat(document.getElementById(`precio-${id}`).value) || 0;
+        const descPct = parseFloat(document.getElementById(`desc-${id}`).value) || 0;
         const det = document.getElementById(`detalle-${id}`).value || '';
 
-        subtotal += (cant * precio);
+        const lineaOriginal = cant * precio;
+        const lineaDescuento = lineaOriginal * (descPct / 100);
 
-        // Agregamos al render PDF si hay nombre
-        // Se hace un rowspan=2 engañoso en "Cantidad" y "Precio" para poner el sub-detalle bajo nombre si se desea (siguiendo mockup), 
-        // pero simplifiquémoslo con subtexto en la misma celda de Producto.
+        subtotalBruto += lineaOriginal;
+        totalDescuento += lineaDescuento;
+
+        let nombreHtml = `<span class="p-title">${nombre}</span>`;
+        if(descPct > 0) {
+            nombreHtml += `<br><span class="desc-badge">-${descPct}% Desc.</span>`;
+        }
+
         if (nombre || cant > 0) {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td class="center-col">${cant || ''}</td>
-                <td class="prod-col">
-                    <span class="p-title">${nombre}</span><br>
-                    <span class="p-sub">${det}</span>
-                </td>
-                <td class="money-col">${formatearDinero(precio)}</td>
-                <td class="empty-col"></td> <!-- Columna de detalles original. Movimos detalle del input al nombre, pero si querian columna "Detalles" usarla -->
-            `;
-            // Reajuste: el usuario tiene una columna "Detalles". Pongamos el detalle alli.
-            tr.innerHTML = `
-                <td class="center-col">${cant || ''}</td>
-                <td class="prod-col"><span class="p-title">${nombre}</span></td>
+                <td class="prod-col">${nombreHtml}</td>
                 <td class="money-col">${formatearDinero(precio)}</td>
                 <td class="details-col"><span class="p-sub">${det}</span></td>
             `;
@@ -233,10 +235,22 @@ function calcularTodo() {
         }
     });
 
-    const iva = subtotal * 0.19;
-    const total = subtotal + iva;
+    const subtotalNeto = subtotalBruto - totalDescuento;
+    const iva = subtotalNeto * 0.19;
+    const total = subtotalNeto + iva;
 
-    document.getElementById('pdf_subtotal').textContent = formatearDinero(subtotal);
+    document.getElementById('pdf_subtotal').textContent = formatearDinero(subtotalBruto);
+    
+    if(totalDescuento > 0) {
+        document.getElementById('pdf_row_descuento').style.display = 'flex';
+        document.getElementById('pdf_row_subtotal_neto').style.display = 'flex';
+        document.getElementById('pdf_descuento').textContent = `-${formatearDinero(totalDescuento)}`;
+        document.getElementById('pdf_subtotal_neto').textContent = formatearDinero(subtotalNeto);
+    } else {
+        document.getElementById('pdf_row_descuento').style.display = 'none';
+        document.getElementById('pdf_row_subtotal_neto').style.display = 'none';
+    }
+
     document.getElementById('pdf_iva').textContent = formatearDinero(iva);
     document.getElementById('pdf_total').textContent = formatearDinero(total);
 }
@@ -276,11 +290,12 @@ async function generarPDFyGuardarBD() {
     
     // Cambiar estilos temporales para la exportación (pdf requiere dimensiones fijas exactas a A4 a veces)
     const opt = {
-        margin:       [0.2, 0.2, 0.2, 0.2], // in inches
+        margin:       [0.4, 0.4, 0.4, 0.4], // inches (aumentado para saltos de página)
         filename:     `Cotizacion_TriFood_${clientData.empresa.replace(/[^a-z0-9]/gi, '_') || 'Nuevo'}.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2, useCORS: true },
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
+        pagebreak:    { mode: 'css', avoid: ['tr', '.pdf-totals-section', '.pdf-conditions'] }
     };
 
     html2pdf().set(opt).from(element).save();
@@ -298,24 +313,41 @@ function generarExcel() {
     data.push(["Empresa", empresaName]);
     data.push(["Fecha", document.getElementById('pdf_fecha_emision').textContent]);
     data.push([]); // blank row
-    data.push(["Cantidad #", "Producto", "Precio Unitario", "Detalles", "Total Línea"]);
+    data.push(["Cantidad #", "Producto", "Precio Unitario", "Desc (%)", "Descuento $", "Total Neto", "Detalles"]);
+
+    let subtotalBruto = 0;
+    let totalDescuento = 0;
 
     filasCotizacion.forEach(id => {
         const cant = parseFloat(document.getElementById(`cant-${id}`).value) || 0;
         const nombre = document.getElementById(`prod-${id}`).value || '';
         const precio = parseFloat(document.getElementById(`precio-${id}`).value) || 0;
+        const descPct = parseFloat(document.getElementById(`desc-${id}`).value) || 0;
         const det = document.getElementById(`detalle-${id}`).value || '';
         
+        const lineaBruto = cant * precio;
+        const lineaDescMonto = lineaBruto * (descPct / 100);
+        const lineaNeto = lineaBruto - lineaDescMonto;
+
+        subtotalBruto += lineaBruto;
+        totalDescuento += lineaDescMonto;
+
         if(nombre) {
-            data.push([cant, nombre, precio, det, cant*precio]);
+            data.push([cant, nombre, precio, descPct, lineaDescMonto, lineaNeto, det]);
         }
     });
 
     data.push([]);
-    const sub = document.getElementById('pdf_subtotal').textContent;
-    data.push(["", "", "", "SUBTOTAL:", sub]);
-    data.push(["", "", "", "IVA 19%:", document.getElementById('pdf_iva').textContent]);
-    data.push(["", "", "", "TOTAL:", document.getElementById('pdf_total').textContent]);
+    data.push(["", "", "", "", "SUBTOTAL BRUTO:", subtotalBruto]);
+    
+    if(totalDescuento > 0) {
+        data.push(["", "", "", "", "TOTAL DESCUENTO:", -totalDescuento]);
+        data.push(["", "", "", "", "SUBTOTAL NETO:", subtotalBruto - totalDescuento]);
+    }
+    
+    const subtotalFinal = subtotalBruto - totalDescuento;
+    data.push(["", "", "", "", "IVA 19%:", subtotalFinal * 0.19]);
+    data.push(["", "", "", "", "TOTAL:", subtotalFinal * 1.19]);
 
     // Create Worksheet
     const ws = XLSX.utils.aoa_to_sheet(data);

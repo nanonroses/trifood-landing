@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRIFOOD — Menú</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --green:     #1E3932;
+  --green-mid: #2D5245;
+  --green-lt:  #D4E9E2;
+  --amber:     #C8802A;
+  --white:     #FFFFFF;
+  --off:       #F4F1EB;
+  --border:    #DDD8CE;
+  --ink:       #1A1208;
+  --muted:     #7A6D58;
+  --f:         'Poppins', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #D6D3CC;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 24px 0;
+  font-family: var(--f);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── A4 PAGE ── */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  background: var(--white);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── PRINT ── */
+@media print {
+  body { background: white; padding: 0; }
+  .page { box-shadow: none; width: 100%; min-height: 100vh; }
+  .no-print { display: none; }
+  @page { size: A4; margin: 0; }
+}
+
+/* ── NO-PRINT BUTTONS ── */
+.no-print {
+  position: fixed; top: 16px; right: 16px;
+  display: flex; gap: 8px; z-index: 999;
+}
+.btn-action {
+  background: var(--green); color: white;
+  border: none; border-radius: 6px;
+  padding: .5rem 1rem;
+  font-family: var(--f); font-size: .68rem; font-weight: 500;
+  cursor: pointer; letter-spacing: .04em;
+  transition: background .2s;
+  text-decoration: none; display: flex; align-items: center; gap: .4rem;
+}
+.btn-action:hover { background: var(--green-mid); }
+
+/* ── HEADER ── */
+.header {
+  background: var(--green);
+  padding: 10mm 12mm 8mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-brand { }
+.brand-name {
+  font-size: 2rem; font-weight: 700;
+  letter-spacing: .1em; color: var(--white);
+  line-height: 1;
+}
+.brand-tagline {
+  font-size: .55rem; font-weight: 400;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  margin-top: 3px;
+}
+.header-meta {
+  text-align: right;
+  font-size: .58rem; font-weight: 400;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  line-height: 1.8;
+}
+
+/* ── AMBER STRIPE ── */
+.stripe {
+  height: 3px;
+  background: var(--amber);
+}
+
+/* ── BODY GRID ── */
+.body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  padding: 7mm 8mm 6mm;
+  column-gap: 8mm;
+}
+
+/* ── SECTION ── */
+.section { margin-bottom: 5mm; }
+
+.sec-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 3mm;
+  padding-bottom: 2mm;
+  border-bottom: 1.5px solid var(--green);
+}
+.sec-icon {
+  width: 14px; height: 14px;
+  color: var(--green);
+  flex-shrink: 0;
+}
+.sec-title {
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--green);
+}
+
+/* ── ITEM ── */
+.item { margin-bottom: 2.5mm; }
+.item-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.item-name {
+  font-size: .72rem; font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.item-dots {
+  flex: 1;
+  border-bottom: 1.5px dotted var(--border);
+  margin-bottom: 2px;
+}
+.item-price {
+  font-size: .72rem; font-weight: 700;
+  color: var(--green);
+  white-space: nowrap;
+}
+.item-desc {
+  font-size: .6rem; font-weight: 300;
+  color: var(--muted); font-style: italic;
+  margin-top: 1px; line-height: 1.35;
+}
+
+/* featured item */
+.item-feat .item-name { color: var(--amber); }
+.item-feat .item-price { color: var(--amber); font-size: .78rem; }
+
+/* ── ALMUERZO CARD ── */
+.alm-card {
+  background: var(--green);
+  border-radius: 5px;
+  padding: 3mm 4mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2mm;
+}
+.alm-left { }
+.alm-label {
+  font-size: .52rem; font-weight: 500;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  display: block; margin-bottom: 1px;
+}
+.alm-title {
+  font-size: .78rem; font-weight: 700;
+  color: var(--white); line-height: 1.2;
+}
+.alm-sub {
+  font-size: .58rem; font-weight: 300;
+  color: rgba(255,255,255,.55); font-style: italic;
+  margin-top: 1px;
+}
+.alm-price {
+  font-size: 1.4rem; font-weight: 700;
+  color: var(--white); line-height: 1;
+}
+.alm-badge {
+  font-size: .5rem; font-weight: 500;
+  letter-spacing: .1em;
+  color: rgba(255,255,255,.4);
+  border: 1px solid rgba(255,255,255,.2);
+  padding: 1px 6px; border-radius: 100px;
+  display: inline-block; margin-top: 2mm;
+}
+
+/* ── CAFETERÍA SIZES ── */
+.cafe-sizes {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2mm;
+  margin-bottom: 2.5mm;
+}
+.cafe-sz {
+  background: var(--off);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2mm 2.5mm;
+}
+.csz-label {
+  font-size: .52rem; font-weight: 500;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted); display: block;
+}
+.csz-price {
+  font-size: 1rem; font-weight: 700;
+  color: var(--green); line-height: 1.1;
+}
+
+.cafe-drinks {
+  font-size: .65rem; font-weight: 400;
+  color: var(--ink); line-height: 1.65;
+  margin-bottom: 1.5mm;
+}
+.cafe-drinks strong { font-weight: 600; }
+.cafe-note {
+  font-size: .58rem; color: var(--muted);
+  font-style: italic; margin-bottom: 2.5mm;
+}
+
+/* ── PASTELERÍA ── */
+.pastry-list {
+  font-size: .65rem; font-weight: 300;
+  color: var(--ink); line-height: 1.7;
+  font-style: italic;
+}
+
+/* ── TORTAS ── */
+.torta-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 2mm;
+}
+.torta-info { }
+.torta-name {
+  font-size: .7rem; font-weight: 600;
+  color: var(--ink);
+}
+.torta-qty {
+  font-size: .58rem; color: var(--muted);
+  font-style: italic;
+}
+.torta-price {
+  font-size: .78rem; font-weight: 700;
+  color: var(--amber); white-space: nowrap;
+}
+
+/* ── COLUMN DIVIDER ── */
+.col-divider {
+  width: 1px;
+  background: var(--border);
+  margin: 0;
+  grid-column: auto;
+  align-self: stretch;
+}
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--off);
+  border-top: 2px solid var(--green);
+  padding: 4mm 8mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6mm;
+}
+.footer-contact {
+  display: flex; gap: 5mm; align-items: center;
+}
+.footer-item {
+  font-size: .58rem; font-weight: 400;
+  color: var(--muted); letter-spacing: .06em;
+}
+.footer-item strong { color: var(--ink); font-weight: 600; }
+.footer-dot { color: var(--border); font-size: .7rem; }
+.footer-qr {
+  display: flex; align-items: center; gap: 3mm;
+}
+.footer-qr img {
+  width: 34px; height: 34px;
+}
+.footer-qr-label {
+  font-size: .5rem; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+</style>
+</head>
+<body>
+
+<!-- Botones flotantes (no imprimen) -->
+<div class="no-print">
+  <a href="index.html" class="btn-action">← Inicio</a>
+  <button class="btn-action" onclick="window.print()">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+    Imprimir
+  </button>
+</div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-brand">
+      <div class="brand-name">TRIFOOD</div>
+      <div class="brand-tagline">Café &amp; Bistro · Santiago Centro</div>
+    </div>
+    <div class="header-meta">
+      Cotiza eventos<br>
+      +56 9 9505 2096
+    </div>
+  </header>
+  <div class="stripe"></div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- ═══ COLUMNA IZQUIERDA ═══ -->
+    <div>
+
+      <!-- DESAYUNOS -->
+      <div class="section">
+        <div class="sec-header">
+          <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <span class="sec-title">Desayunos</span>
+        </div>
+
+        <div class="item">
+          <div class="item-row">
+            <span class="item-name">Express</span>
+            <span class="item-dots"></span>
+            <span class="item-price">$3.000</span>
+          </div>
+          <div class="item-desc">Espresso + Sándwich</div>
+        </div>
+
+        <div class="item">
+          <div class="item-row">
+            <span class="item-name">Medium</span>
+            <span class="item-dots"></span>
+            <span class="item-price">$4.000</span>
+          </div>
+          <div class="item-desc">Café Mediano + Muffins</div>
+        </div>
+
+        <div class="item">
+          <div class="item-row">
+            <span class="item-name">High</span>
+            <span class="item-dots"></span>
+            <span class="item-price">$6.500</span>
+          </div>
+          <div class="item-desc">Café Grande + Sándwich del Día + Jugo Natural</div>
+        </div>
+
+        <div class="item item-feat">
+          <div class="item-row">
+            <span class="item-name">TRIFOOD</span>
+            <span class="item-dots"></span>
+            <span class="item-price">$9.990</span>
+          </div>
+          <div class="item-desc">Café Grande + Pastel del día + Sándwich del día + Jugo Natural + Fruta</div>
+        </div>
+      </div>
+
+      <!-- ALMUERZOS -->
+      <div class="section">
+        <div class="sec-header">
+          <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+          <span class="sec-title">Almuerzos</span>
+        </div>
+        <div class="alm-card">
+          <div class="alm-left">
+            <span class="alm-label">Menú del día</span>
+            <div class="alm-title">Plato de Fondo + Postre</div>
+            <div class="alm-sub">Opciones variadas todos los días</div>
+          </div>
+          <div class="alm-price">$6.000</div>
+        </div>
+        <span class="alm-badge">Vegano · Sin Gluten disponible</span>
+      </div>
+
+      <!-- HELADOS -->
+      <div class="section">
+        <div class="sec-header">
+          <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22v-9"/><path d="M9 9a3 3 0 0 1 6 0"/><path d="M7 9h10l-1 9H8L7 9z"/></svg>
+          <span class="sec-title">Helados</span>
+        </div>
+
+        <div class="item">
+          <div class="item-row">
+            <span class="item-name">Frappuccino</span>
+            <span class="item-dots"></span>
+            <span class="item-price">$4.490</span>
+          </div>
+          <div class="item-desc">Caramelo o Vainilla, Café, Hielo, Crema Chantilly</div>
+        </div>
+
+        <div class="item">
+          <div class="item-row">
+            <span class="item-name">Copa de Helados</span>
+            <span class="item-dots"></span>
+            <span class="item-price">$4.990</span>
+          </div>
+          <div class="item-desc">3 Bolas a elección, Salsa, Crema Chantilly</div>
+        </div>
+
+        <div class="item">
+          <div class="item-row">
+            <span class="item-name">Café con Helado</span>
+            <span class="item-dots"></span>
+            <span class="item-price">$5.990</span>
+          </div>
+          <div class="item-desc">2 Bolas, Leche sin Lactosa, Shot Café, Salsa Chocolate</div>
+        </div>
+      </div>
+
+    </div><!-- /col izquierda -->
+
+    <!-- ═══ COLUMNA DERECHA ═══ -->
+    <div>
+
+      <!-- CAFETERÍA -->
+      <div class="section">
+        <div class="sec-header">
+          <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+          <span class="sec-title">Cafetería</span>
+        </div>
+
+        <div class="cafe-sizes">
+          <div class="cafe-sz">
+            <span class="csz-label">Mediano</span>
+            <span class="csz-price">$2.690</span>
+          </div>
+          <div class="cafe-sz">
+            <span class="csz-label">Grande</span>
+            <span class="csz-price">$3.190</span>
+          </div>
+        </div>
+
+        <div class="cafe-drinks">
+          <strong>Americano</strong> &nbsp;·&nbsp; <strong>Latte</strong> &nbsp;·&nbsp; <strong>Cortado</strong> &nbsp;·&nbsp; <strong>Chai Latte</strong><br>
+          <strong>Moccacino</strong> &nbsp;·&nbsp; <strong>Cappuccino</strong>
+        </div>
+        <div class="cafe-note">Tradicional · Vainilla · Canela</div>
+
+        <div class="item">
+          <div class="item-row">
+            <span class="item-name">Té Variedad</span>
+            <span class="item-dots"></span>
+            <span class="item-price">$1.800</span>
+          </div>
+          <div class="item-desc">Tradicional, Chai, Verde, Especies</div>
+        </div>
+      </div>
+
+      <!-- PASTELERÍA -->
+      <div class="section">
+        <div class="sec-header">
+          <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4H8a4 4 0 0 1 4-4z"/><path d="M3 10h18l-1.5 9H4.5L3 10z"/><path d="M3 10V8"/><path d="M21 10V8"/></svg>
+          <span class="sec-title">Pastelería</span>
+        </div>
+        <div class="pastry-list">
+          Empolvados · Rollitos de Canela · Alfajores · Galletones ·
+          Barquillos Rellenos Manjar o Chocolate · Bombones Prieto ·
+          Tortas de Hojarasca · Mendocinos · Chilenitos · Muffins
+        </div>
+      </div>
+
+      <!-- POSTRES -->
+      <div class="section">
+        <div class="sec-header">
+          <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="sec-title">Postres</span>
+        </div>
+
+        <div class="item">
+          <div class="item-row">
+            <span class="item-name">Pie de Limón</span>
+            <span class="item-dots"></span>
+            <span class="item-price">$2.500</span>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-row">
+            <span class="item-name">Kutchen de Manzana</span>
+            <span class="item-dots"></span>
+            <span class="item-price">$2.500</span>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-row">
+            <span class="item-name">Kutchen de Nuez</span>
+            <span class="item-dots"></span>
+            <span class="item-price">$2.500</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TORTAS A PEDIDO -->
+      <div class="section">
+        <div class="sec-header">
+          <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="sec-title">Tortas a Pedido</span>
+        </div>
+
+        <div class="torta-item">
+          <div class="torta-info">
+            <div class="torta-name">Manjar Hojarasca</div>
+            <div class="torta-qty">15–20 personas</div>
+          </div>
+          <div class="torta-price">$29.000</div>
+        </div>
+        <div class="torta-item">
+          <div class="torta-info">
+            <div class="torta-name">Panqueque Naranja</div>
+            <div class="torta-qty">15–20 personas</div>
+          </div>
+          <div class="torta-price">$32.000</div>
+        </div>
+        <div class="torta-item">
+          <div class="torta-info">
+            <div class="torta-name">Barquillos Rellenos</div>
+            <div class="torta-qty">36 unidades</div>
+          </div>
+          <div class="torta-price">$38.000</div>
+        </div>
+      </div>
+
+    </div><!-- /col derecha -->
+
+  </div><!-- /body grid -->
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-contact">
+      <span class="footer-item">🎉 <strong>Cotiza Eventos</strong></span>
+      <span class="footer-dot">·</span>
+      <span class="footer-item">Instagram: <strong>comercialtrifood</strong></span>
+      <span class="footer-dot">·</span>
+      <span class="footer-item">📞 <strong>+56 9 9505 2096</strong></span>
+    </div>
+    <div class="footer-qr">
+      <img src="img/qr_trifood.png" alt="QR TRIFOOD">
+      <span class="footer-qr-label">Escanéame</span>
+    </div>
+  </footer>
+
+</div><!-- /page -->
+</body>
+</html>

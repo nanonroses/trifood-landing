@@ -208,11 +208,14 @@ body {
     background-color: var(--pdf-bg);
     width: 210mm;
     min-height: 297mm;
-    padding: 20mm; /* Mas aire que antes */
+    height: max-content;
+    padding: 15mm 20mm;
     box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     color: var(--pdf-text);
     font-family: 'Inter', -apple-system, sans-serif;
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Header Rediseñado */
@@ -220,9 +223,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center; /* Alineado al centro para equilibrar el logo grande */
-    margin-bottom: 40px;
+    margin-bottom: 25px;
     background-color: #000000; /* Fondo negro puro para fundirse con el logo */
-    padding: 25px 30px;
+    padding: 20px 30px;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
@@ -233,21 +236,30 @@ body {
 }
 
 .pdf-company-info {
-    font-size: 9.5pt;
+    font-size: 8.5pt;
     color: #d1d5db; /* Gris claro sutil para el texto de información */
+    display: grid;
+    grid-template-columns: max-content max-content max-content auto;
+    column-gap: 12px;
+    row-gap: 8px;
+    align-items: center; /* Restaurado a centro porque ya no habrá salto de línea */
 }
 
-.info-row { margin-bottom: 4px; display: flex; justify-content: flex-end;}
+.info-row { display: contents; }
 .info-row .info-label {
-    width: 90px;
     text-align: right;
     font-weight: 600;
     color: #ffffff; /* Blanco puro para las etiquetas */
-    margin-right: 15px;
+    line-height: 1.4;
 }
 .info-row .info-value {
-    width: 200px;
     text-align: left;
+    line-height: 1.4;
+}
+
+/* Espaciador central artificial para separar los dos bloques principales */
+.pdf-company-info .info-row:nth-child(odd) .info-value {
+    padding-right: 30px;
 }
 
 /* Titles */
@@ -283,8 +295,8 @@ body {
 .pdf-client-box {
     background-color: #f8f9fa;
     border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 35px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
     font-size: 10pt;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -323,6 +335,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .pdf-table td {
@@ -340,7 +353,7 @@ body {
 .pdf-totals-section {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     margin-top: 10px;
 }
 
@@ -366,21 +379,37 @@ body {
     color: white;
     padding: 18px 20px;
     border-radius: 8px;
-    font-size: 15pt;
-    margin-top: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 .total-row.grand-total span { color: white !important; font-weight: 700; }
 
+.total-row.discount-row {
+    color: #e53e3e;
+}
+.total-row.discount-row span:last-child {
+    color: #e53e3e !important;
+    font-weight: 700;
+}
+
+.desc-badge {
+    display: inline-block;
+    background-color: #ffebeb;
+    color: #e53e3e;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: bold;
+    margin-top: 4px;
+}
 
 /* Conditions */
 .pdf-conditions {
     display: flex;
     justify-content: space-between;
     background-color: #f8f9fa;
-    padding: 25px;
+    padding: 15px 25px;
     border-radius: 8px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     border: 1px solid #edf2f7;
 }
 
@@ -447,6 +476,7 @@ body {
     padding-top: 20px;
     font-size: 9pt;
     color: var(--pdf-muted);
+    margin-top: auto; /* Empuja el footer al final de la página A4 en diseño corto */
 }
 
 .footer-center {
