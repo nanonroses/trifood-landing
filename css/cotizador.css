@@ -478,7 +478,7 @@ body {
     padding-top: 20px;
     font-size: 9pt;
     color: var(--pdf-muted);
-    margin-top: auto; /* Empuja el footer al final de la página A4 en diseño corto */
+    margin-top: 40px;
 }
 
 .footer-center {

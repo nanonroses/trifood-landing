@@ -24,7 +24,7 @@ async function initApp() {
     await fetchProductosExcel();
     
     // Configurar Folio
-    document.getElementById('pdf_folio').textContent = `Folio N° COT-${generarSecuencia()}`;
+    document.getElementById('pdf_folio').textContent = `Folio N° ${generarSecuencia()}`;
 }
 
 function establecerFechaEmision() {
@@ -39,11 +39,13 @@ function establecerFechaEmision() {
 }
 
 function generarSecuencia() {
-    const today = new Date();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const yy = String(today.getFullYear()).slice(-2);
-    const rand = Math.floor(Math.random() * 900) + 100;
-    return `${yy}${mm}-${rand}`;
+    const now = new Date();
+    const dd = String(now.getDate()).padStart(2, '0');
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const yy = String(now.getFullYear()).slice(-2);
+    const hh = String(now.getHours()).padStart(2, '0');
+    const min = String(now.getMinutes()).padStart(2, '0');
+    return `${dd}${mm}${yy}_${hh}${min}`;
 }
 
 /** 
@@ -307,20 +309,89 @@ async function generarPDFyGuardarBD() {
         console.warn("Fallo guardando en servidor CRM", err);
     }
 
-    // Exportar a PDF
+    // Regenerar folio con la hora exacta del guardado
+    document.getElementById('pdf_folio').textContent = `Folio N° ${generarSecuencia()}`;
+
+    // Exportar a PDF con footer repetido en todas las páginas
     const element = document.getElementById('pdf-document');
-    
-    // Cambiar estilos temporales para la exportación (pdf requiere dimensiones fijas exactas a A4 a veces)
+    const footer = document.querySelector('.pdf-footer');
+    const pdfFilename = `Cotizacion_TriFood_${clientData.empresa.replace(/[^a-z0-9]/gi, '_') || 'Nuevo'}.pdf`;
+
+    // Leer fecha de emisión antes de ocultar el footer
+    const fechaEmision = document.getElementById('pdf_fecha_emision').textContent || '--';
+
+    // Precargar imagen QR como base64
+    const qrBase64 = await new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            canvas.getContext('2d').drawImage(img, 0, 0);
+            resolve(canvas.toDataURL('image/png'));
+        };
+        img.onerror = () => resolve(null);
+        img.src = 'img/qr_trifood.png';
+    });
+
+    // Ocultar footer HTML y neutralizar min-height/padding del contenedor para exportación
+    footer.style.display = 'none';
+    const origMinHeight = element.style.minHeight;
+    const origPadding = element.style.padding;
+    const origHeight = element.style.height;
+    element.style.minHeight = 'unset';
+    element.style.height = 'auto';
+    element.style.padding = '0 10mm';
+
     const opt = {
-        margin:       [0.4, 0.4, 0.4, 0.4], // inches (aumentado para saltos de página)
-        filename:     `Cotizacion_TriFood_${clientData.empresa.replace(/[^a-z0-9]/gi, '_') || 'Nuevo'}.pdf`,
+        margin:       [0.2, 0.2, 0.6, 0.2], // top, left, bottom (espacio footer), right
+        filename:     pdfFilename,
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2, useCORS: true },
         jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
         pagebreak:    { mode: 'css', avoid: ['tr', '.pdf-totals-section', '.pdf-conditions'] }
     };
 
-    html2pdf().set(opt).from(element).save();
+    html2pdf().set(opt).from(element).toPdf().get('pdf').then((pdf) => {
+        const totalPages = pdf.internal.getNumberOfPages();
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+
+        for (let i = 1; i <= totalPages; i++) {
+            pdf.setPage(i);
+            const footerY = pageHeight - 0.35;
+
+            // Línea separadora
+            pdf.setDrawColor(200, 200, 200);
+            pdf.setLineWidth(0.01);
+            pdf.line(0.2, footerY - 0.12, pageWidth - 0.2, footerY - 0.12);
+
+            // Textos del footer
+            pdf.setFontSize(8);
+            pdf.setTextColor(120, 120, 120);
+            pdf.text('Duración Cotización: 15 días', 0.3, footerY);
+            pdf.text('Fecha Cotización: ' + fechaEmision, 2.6, footerY);
+
+            // Imagen QR
+            if (qrBase64) {
+                pdf.addImage(qrBase64, 'PNG', pageWidth - 0.75, footerY - 0.3, 0.45, 0.45);
+            }
+
+            // Número de página
+            pdf.setFontSize(7);
+            pdf.setTextColor(160, 160, 160);
+            pdf.text('Página ' + i + ' de ' + totalPages, pageWidth / 2, footerY + 0.15, { align: 'center' });
+        }
+
+        pdf.save(pdfFilename);
+    }).then(() => {
+        // Restaurar estilos originales para la vista en pantalla
+        footer.style.display = '';
+        element.style.minHeight = origMinHeight;
+        element.style.height = origHeight;
+        element.style.padding = origPadding;
+    });
 }
 
 /**
