@@ -112,7 +112,12 @@
             'TOP VENTAS': 'badge-top-ventas',
             'PREMIUM': 'badge-premium',
             'FORMATO PRO': 'badge-formato-pro',
-            'PRECIO ÚNICO': 'badge-precio-unico'
+            'PRECIO ÚNICO': 'badge-precio-unico',
+            'STARTER': 'badge-pack',
+            'MÁS VENDIDO': 'badge-pack-best',
+            'GOURMET': 'badge-pack',
+            'TEMPORADA': 'badge-pack',
+            'COLECCIÓN': 'badge-pack'
         };
         return map[badge] || 'badge-default';
     }
@@ -143,7 +148,9 @@
 
             // Image or placeholder
             let imgHtml;
-            if (p.imagen) {
+            if (p.esPack) {
+                imgHtml = `<div class="card-img-placeholder pack-placeholder"><i class="fas fa-box-open"></i></div>`;
+            } else if (p.imagen) {
                 imgHtml = `<div class="card-img" style="background-image: url('${p.imagen}');"></div>`;
             } else {
                 imgHtml = `<div class="card-img-placeholder"><i class="${p.categoriaIcono}"></i></div>`;
@@ -157,7 +164,18 @@
 
             // Pricing HTML
             let pricingHtml = '';
-            if (p.precioMayorista) {
+            if (p.esPack) {
+                // Pack-specific pricing: strikethrough + savings
+                pricingHtml = `
+                    <div class="pricing-row pack-original">
+                        <span class="pricing-label">Por separado</span>
+                        <span class="pricing-value pack-strikethrough">${formatPrice(p.precioSinPack)}</span>
+                    </div>
+                    <div class="pricing-row pack-price">
+                        <span class="pricing-label">Precio Pack <span class="pack-savings-badge">Ahorra ${p.ahorro}%</span></span>
+                        <span class="pricing-value">${formatPrice(p.precioUnitario)}</span>
+                    </div>`;
+            } else if (p.precioMayorista) {
                 pricingHtml = `
                     <div class="pricing-row">
                         <span class="pricing-label">Unitario</span>
@@ -175,22 +193,30 @@
                     </div>`;
             }
 
+            // Pack contents list
+            let contenidoHtml = '';
+            if (p.esPack && p.contenido) {
+                contenidoHtml = `<ul class="pack-contents">${p.contenido.map(item => `<li><i class="fas fa-check"></i> ${item}</li>`).join('')}</ul>`;
+            }
+
             // Grid Card
+            const cardClass = p.esPack ? 'catalog-card pack-card' : 'catalog-card';
             gridHtml += `
-                <div class="catalog-card" style="animation-delay: ${i * 0.05}s;" data-id="${p.id}">
+                <div class="${cardClass}" style="animation-delay: ${i * 0.05}s;" data-id="${p.id}">
                     ${badgeHtml}
                     ${imgHtml}
                     <div class="card-body">
                         <span class="card-category">${p.categoriaNombre}</span>
                         <h3 class="card-title">${p.nombre}</h3>
                         <p class="card-desc">${p.descripcion}</p>
-                        <span class="card-format"><i class="fas fa-box"></i> ${p.formato}</span>
+                        ${contenidoHtml}
+                        <span class="card-format"><i class="fas fa-${p.esPack ? 'cubes' : 'box'}"></i> ${p.formato}</span>
                         <div class="card-pricing">
                             ${pricingHtml}
                         </div>
                         <div class="card-actions">
                             <button class="${btnClass}" onclick="catalogo.toggleQuote('${p.id}')">${btnLabel}</button>
-                            <a href="https://wa.me/56995052096?text=${encodeURIComponent('Hola, me interesa el producto: ' + p.nombre + ' (' + p.formato + ')')}" target="_blank" class="btn-cotizar btn-whatsapp"><i class="fab fa-whatsapp"></i></a>
+                            <a href="https://wa.me/56995052096?text=${encodeURIComponent('Hola, me interesa el ' + p.nombre + ' (' + p.formato + ')')}" target="_blank" class="btn-cotizar btn-whatsapp"><i class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>`;
@@ -272,6 +298,7 @@
 
     // ==================== EXPORT PDF ====================
     async function exportPDF() {
+      try {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF('p', 'mm', 'a4');
         const filtered = getFilteredProducts();
@@ -368,10 +395,15 @@
         doc.text('Precios en CLP. Sujetos a disponibilidad y cambios sin previo aviso.', pageWidth / 2, finalY + 10, { align: 'center' });
 
         doc.save('Catalogo_TRIFOOD.pdf');
+      } catch (err) {
+        console.error('Error exportando PDF:', err);
+        alert('Error al generar PDF: ' + err.message);
+      }
     }
 
     // ==================== EXPORT EXCEL ====================
     function exportExcel() {
+      try {
         const filtered = getFilteredProducts();
         const data = filtered.map(p => {
             const discount = getDiscount(p.precioUnitario, p.precioMayorista);
@@ -399,6 +431,10 @@
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, worksheet, 'Catálogo TRIFOOD');
         XLSX.writeFile(wb, 'Catalogo_TRIFOOD.xlsx');
+      } catch (err) {
+        console.error('Error exportando Excel:', err);
+        alert('Error al generar Excel: ' + err.message);
+      }
     }
 
     // ==================== EVENT LISTENERS ====================

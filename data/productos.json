@@ -3,6 +3,109 @@
   "umbralMayoristaDefault": 10,
   "categorias": [
     {
+      "id": "packs",
+      "nombre": "Packs",
+      "icono": "fas fa-box-open",
+      "productos": [
+        {
+          "id": "pack-barista-starter",
+          "nombre": "Pack Barista Starter",
+          "descripcion": "Todo lo esencial para empezar: Café de Especialidad 1kg + Syrup Vanilla + Syrup Caramelo + Leche en Polvo.",
+          "imagen": null,
+          "formato": "4 productos",
+          "precioUnitario": 74360,
+          "precioMayorista": null,
+          "umbralMayorista": null,
+          "badge": "STARTER",
+          "disponible": true,
+          "esPack": true,
+          "precioSinPack": 79960,
+          "ahorro": 7,
+          "contenido": ["Café de Especialidad 1kg", "Syrup Torani Vanilla 750ml", "Syrup Torani Caramelo 750ml", "Leche en Polvo 500g"]
+        },
+        {
+          "id": "pack-cafe-completo",
+          "nombre": "Pack Café Completo",
+          "descripcion": "Carta completa desde el día 1: Café 1kg + 3 Syrups (Vanilla, Caramelo, Hazelnut) + Leche en Polvo + Vainilla en Polvo.",
+          "imagen": null,
+          "formato": "6 productos",
+          "precioUnitario": 105960,
+          "precioMayorista": null,
+          "umbralMayorista": null,
+          "badge": "MÁS VENDIDO",
+          "disponible": true,
+          "esPack": true,
+          "precioSinPack": 113940,
+          "ahorro": 7,
+          "contenido": ["Café de Especialidad 1kg", "Syrup Torani Vanilla 750ml", "Syrup Torani Caramelo 750ml", "Syrup Torani Hazelnut 750ml", "Leche en Polvo 500g", "Vainilla en Polvo 1kg"]
+        },
+        {
+          "id": "pack-chocolateria-pro",
+          "nombre": "Pack Chocolatería Pro",
+          "descripcion": "Ideal para bebidas de chocolate caliente, repostería y regalos gourmet: Chocolate en Polvo + Leche en Polvo + Vainilla en Polvo + 2 Cajas de Bombones.",
+          "imagen": null,
+          "formato": "4 productos (5 unidades)",
+          "precioUnitario": 60420,
+          "precioMayorista": null,
+          "umbralMayorista": null,
+          "badge": "GOURMET",
+          "disponible": true,
+          "esPack": true,
+          "precioSinPack": 64970,
+          "ahorro": 7,
+          "contenido": ["Chocolate en Polvo 1kg", "Leche en Polvo 500g", "Vainilla en Polvo 1kg", "Bombones Artesanales x2 cajas"]
+        },
+        {
+          "id": "pack-bebidas-temporada",
+          "nombre": "Pack Bebidas de Temporada",
+          "descripcion": "Chai Latte, Mocha Menta, Smoothies tropicales: Chai Tea + Syrup Menta + Syrup Coconut + Syrup Peach + Leche en Polvo.",
+          "imagen": null,
+          "formato": "5 productos",
+          "precioUnitario": 68770,
+          "precioMayorista": null,
+          "umbralMayorista": null,
+          "badge": "TEMPORADA",
+          "disponible": true,
+          "esPack": true,
+          "precioSinPack": 73950,
+          "ahorro": 7,
+          "contenido": ["Chai Tea en Polvo 1kg", "Syrup Torani Menta 750ml", "Syrup Torani Coconut 750ml", "Syrup Torani Peach 750ml", "Leche en Polvo 500g"]
+        },
+        {
+          "id": "pack-office-coffee",
+          "nombre": "Pack Office Coffee",
+          "descripcion": "Máquina + Café + Regalo gourmet para oficinas y coworks: Máquina Espresso Marley + 2x Café 250g + Bombones Artesanales.",
+          "imagen": null,
+          "formato": "3 productos (4 unidades)",
+          "precioUnitario": 149240,
+          "precioMayorista": null,
+          "umbralMayorista": null,
+          "badge": "PREMIUM",
+          "disponible": true,
+          "esPack": true,
+          "precioSinPack": 160470,
+          "ahorro": 7,
+          "contenido": ["Máquina Espresso Marley Rise Up", "Café de Especialidad 250g x2", "Bombones Artesanales (caja 6 und)"]
+        },
+        {
+          "id": "pack-syrup-collection",
+          "nombre": "Pack Syrup Collection",
+          "descripcion": "Los 6 sabores Torani en un solo pack: Vanilla, Caramelo, Peach, Hazelnut, Coconut y Menta.",
+          "imagen": null,
+          "formato": "6 botellas de 750ml",
+          "precioUnitario": 78060,
+          "precioMayorista": null,
+          "umbralMayorista": null,
+          "badge": "COLECCIÓN",
+          "disponible": true,
+          "esPack": true,
+          "precioSinPack": 83940,
+          "ahorro": 7,
+          "contenido": ["Syrup Torani Vanilla 750ml", "Syrup Torani Caramelo 750ml", "Syrup Torani Peach 750ml", "Syrup Torani Hazelnut 750ml", "Syrup Torani Coconut 750ml", "Syrup Torani Menta 750ml"]
+        }
+      ]
+    },
+    {
       "id": "syrups",
       "nombre": "Syrups Torani",
       "icono": "fas fa-wine-bottle",
@@ -121,7 +224,7 @@
           "id": "leche-polvo",
           "nombre": "Leche en Polvo",
           "descripcion": "Leche en polvo de alta calidad para preparaciones de café, chocolatería y pastelería profesional.",
-          "imagen": null,
+          "imagen": "img/Leche en Polvo.jpg",
           "formato": "500g",
           "precioUnitario": 11990,
           "precioMayorista": 10990,
@@ -133,7 +236,7 @@
           "id": "vainilla-polvo",
           "nombre": "Vainilla en Polvo",
           "descripcion": "Vainilla premium en polvo para potenciar el sabor de tus preparaciones. Alta concentración.",
-          "imagen": null,
+          "imagen": "img/Vainilla en polvo.jpg",
           "formato": "1 Kilo",
           "precioUnitario": 19990,
           "precioMayorista": 18990,
@@ -145,7 +248,7 @@
           "id": "chocolate-polvo",
           "nombre": "Chocolate en Polvo",
           "descripcion": "Chocolate en polvo gourmet para preparar chocolates calientes, mochas y repostería de alta gama.",
-          "imagen": null,
+          "imagen": "img/Chocolate en Polvo.jpg",
           "formato": "1 Kilo",
           "precioUnitario": 15990,
           "precioMayorista": 15190,
@@ -157,10 +260,22 @@
           "id": "chai-tea",
           "nombre": "Chai Tea en Polvo",
           "descripcion": "Mezcla aromática de especias y té para preparar el auténtico Chai Latte. Sabor intenso y equilibrado.",
-          "imagen": null,
+          "imagen": "img/Chai.jpg",
           "formato": "1 Kilo",
           "precioUnitario": 19990,
           "precioMayorista": 18990,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        },
+        {
+          "id": "frutos-secos",
+          "nombre": "Frutos Secos",
+          "descripcion": "Mix de frutos secos seleccionados, ideal como snack premium para acompañar el café o incluir en cartas de degustación.",
+          "imagen": "img/Frutos Secos.jpg",
+          "formato": "80g",
+          "precioUnitario": 1600,
+          "precioMayorista": 1200,
           "umbralMayorista": 10,
           "badge": null,
           "disponible": true
@@ -201,6 +316,75 @@
           "precioMayorista": null,
           "umbralMayorista": null,
           "badge": "PRECIO ÚNICO",
+          "disponible": true
+        }
+      ]
+    },
+    {
+      "id": "galletones",
+      "nombre": "Galletones",
+      "icono": "fas fa-cookie",
+      "productos": [
+        {
+          "id": "galletones",
+          "nombre": "Galletones",
+          "descripcion": "Deliciosos galletones artesanales. Opciones disponibles: Veganos, Sin azúcar, Cinnamon roll, o Limón con semillas de linaza.",
+          "imagen": "img/Galletones.jpeg",
+          "formato": "Unidad",
+          "precioUnitario": 2900,
+          "precioMayorista": 2700,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        }
+      ]
+    },
+    {
+      "id": "mini-pasteles",
+      "nombre": "Mini Pasteles",
+      "icono": "fas fa-birthday-cake",
+      "productos": [
+        {
+          "id": "mix-mini-pasteles",
+          "nombre": "Caja con Mix Mini Pasteles",
+          "descripcion": "Exquisito surtido de mini pasteles artesanales, perfectos para reuniones, coffee breaks o eventos especiales.",
+          "imagen": "img/MiniPasteles.jpeg",
+          "formato": "Caja 10 unidades",
+          "precioUnitario": 10000,
+          "precioMayorista": 9300,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        }
+      ]
+    },
+    {
+      "id": "barquillos",
+      "nombre": "Barquillos Rellenos",
+      "icono": "fas fa-ice-cream",
+      "productos": [
+        {
+          "id": "barquillos-grandes",
+          "nombre": "Barquillos Grandes (Manjar y Chocolate)",
+          "descripcion": "Deliciosos barquillos grandes artesanales rellenos con exquisito manjar y chocolate.",
+          "imagen": "img/Barquillos.jpg",
+          "formato": "Bolsa 3 unidades",
+          "precioUnitario": 3700,
+          "precioMayorista": 3500,
+          "umbralMayorista": 10,
+          "badge": null,
+          "disponible": true
+        },
+        {
+          "id": "barquillos-pequenos",
+          "nombre": "Barquillos Pequeños (Manjar y Chocolate)",
+          "descripcion": "Deliciosos barquillos pequeños artesanales rellenos con exquisito manjar y chocolate.",
+          "imagen": "img/Barquillos.jpg",
+          "formato": "Bolsa 3 unidades",
+          "precioUnitario": 2900,
+          "precioMayorista": 2700,
+          "umbralMayorista": 10,
+          "badge": null,
           "disponible": true
         }
       ]
